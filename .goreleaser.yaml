@@ -33,9 +33,9 @@ brews:
     # This command installs the tail-json CLI to $PATH when it is installed using brew. After that it installs all supported shell auto-completion scripts.
     install: |
       bin.install "tail-json"
-      bash_completion.install "completions/oh-cli.bash" => "oh"
-      zsh_completion.install "completions/oh-cli.zsh" => "_oh"
-      fish_completion.install "completions/oh-cli.fish"
+      bash_completion.install "completions/tail-json-cli.bash" => "tail-json"
+      zsh_completion.install "completions/tail-json-cli.zsh" => "_tail-json"
+      fish_completion.install "completions/tail-json-cli.fish"
 
     # URL_Template configures where to find the release to be registered with homebrew
     url_template: "https://github.com/mgreg90/homebrew-tail-json/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
