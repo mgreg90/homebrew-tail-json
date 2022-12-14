@@ -1,0 +1,52 @@
+# The name of your project
+project_name: tail-json
+
+# Go build configuration
+builds:
+  - env:
+      - CGO_ENABLED=0
+    # Location of your main file in your repo
+    main: ./main.go
+    # Operating systems to build for.
+    goos:
+      - linux
+      - windows
+      - darwin
+    # Binary name
+    binary: tail-json
+
+archives:
+# Archives.files are used to copy files, like assets, from your repository to the release, so they can be copied into the end CLI user's file system.
+# In this case, cobra will generate auto-completion scripts that we want to copy over.
+  - files:
+      - src: completions
+        dst: .
+
+brews:
+  - name: tail-json
+    # This is where your repository is located on github.
+    tap:
+      owner: mgreg90
+      name: homebrew-tail-json
+      branch: main
+
+    # This command installs the tail-json CLI to $PATH when it is installed using brew. After that it installs all supported shell auto-completion scripts.
+    install: |
+      bin.install "tail-json"
+      bash_completion.install "completions/oh-cli.bash" => "oh"
+      zsh_completion.install "completions/oh-cli.zsh" => "_oh"
+      fish_completion.install "completions/oh-cli.fish"
+
+    # URL_Template configures where to find the release to be registered with homebrew
+    url_template: "https://github.com/mgreg90/homebrew-tail-json/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    homepage: "https://github.com/mgreg90/homebrew-tail-json"
+    commit_author:
+      name: Michael Gregory
+      email: mgregory@optimize.health
+
+    # This where you configure homebrew dependencies. Packages listed here will be installed via brew alongside your application,
+    # so you can be confident the user will have them installed if you should call them.
+    dependencies:
+      - name: git
+      - name: go
+      - name: jq
