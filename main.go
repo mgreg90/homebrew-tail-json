@@ -9,15 +9,26 @@ import (
 )
 
 // Create the cobra root command
-var rootCmd = &cobra.Command{
-	Use:   "tail-json",
-	Short: "Tails a file and formats the contents as JSON",
-	Long:  "Tails a file and formats the contents as JSON",
-	// execute the `run` function when `rootCmd` is run by `Execute` (exposed by cobra)
-	Run: run,
-}
+var (
+	rootCmd = &cobra.Command{
+		Use:   "tail-json",
+		Short: "Root command for tail-json",
+		Long:  "Root command for tail-json",
+	}
+
+	subcommand = &cobra.Command{
+		Use:   "logs",
+		Short: "Tails a file and formats the contents as JSON",
+		Long:  "Tails a file and formats the contents as JSON",
+		// execute the `run` function when `subcommand` is called
+		Run: run,
+	}
+)
 
 func main() {
+	// Register the `logs` subcommand
+	rootCmd.AddCommand(subcommand)
+
 	// Call the cobra command
 	err := rootCmd.Execute()
 	if err != nil {
